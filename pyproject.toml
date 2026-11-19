@@ -1,0 +1,23 @@
+[project]
+name = "calinalabs-legacy-mcp"
+version = "0.1.0"
+description = "MCP adapter that lets an AI agent operate a legacy web application with no API."
+requires-python = ">=3.11"
+dependencies = [
+    "fastapi>=0.110",
+    "uvicorn>=0.29",
+    "python-multipart>=0.0.9",
+    "playwright>=1.45",
+    "mcp>=1.2",
+    "anthropic>=0.40",
+]
+
+[dependency-groups]
+dev = ["pytest>=8"]
+
+[tool.uv]
+package = false
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]

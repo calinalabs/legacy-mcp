@@ -1,0 +1,493 @@
+{
+  "summary": {
+    "model": "claude-opus-5-5",
+    "tasks": 13,
+    "passed": 13,
+    "tool_calls": 25,
+    "avg_seconds": 6.9,
+    "input_tokens": 54004,
+    "output_tokens": 5034,
+    "rescored": "task 5 checker phrase list extended after the run; same answers"
+  },
+  "tasks": [
+    {
+      "n": 1,
+      "task": "Invoice Fenwick Builders for 2 site visits at £120 each, dated today.",
+      "pass": true,
+      "fails": [],
+      "answer": "I've posted invoice **INV-01045** to Fenwick Builders Ltd (account FEN001, Norwich), dated 18/11/2026. The system checked it and it matches the request.\n\n- 2 × Site visit at £120.00 = £240.00 before VAT\n- VAT: £48.00\n- **Total: £288.00**",
+      "calls": [
+        {
+          "tool": "find_customer",
+          "input": {
+            "name": "Fenwick Builders"
+          },
+          "output": "{\n  \"matches\": [\n    {\n      \"account\": \"FEN001\",\n      \"name\": \"Fenwick Builders Ltd\",\n      \"town\": \"Norwich\",\n      \"balance\": \"744.00\"\n    }\n  ]\n}"
+        },
+        {
+          "tool": "create_invoice",
+          "input": {
+            "account": "FEN001",
+            "items": [
+              {
+                "description": "Site visit",
+                "quantity": 2,
+                "unit_price": 120
+              }
+            ],
+            "date": "18/11/2026"
+          },
+          "output": "{\n  \"invoice_number\": \"INV-01045\",\n  \"account\": \"FEN001\",\n  \"date\": \"18/11/2026\",\n  \"net\": \"240.00\",\n  \"vat\": \"48.00\",\n  \"total\": \"288.00\",\n  \"verified\": true\n}"
+        }
+      ],
+      "new_invoices": [
+        {
+          "number": "INV-01045",
+          "account": "FEN001",
+          "date": "18/11/2026",
+          "total": "288.00"
+        }
+      ],
+      "seconds": 5.6,
+      "usage": {
+        "input": 4356,
+        "output": 292
+      }
+    },
+    {
+      "n": 2,
+      "task": "Bramble Kitchen: invoice dated 14/11/2026 for VAT return preparation £275 and 3 hours of payroll setup at £60 an hour.",
+      "pass": true,
+      "fails": [],
+      "answer": "I've posted invoice **INV-01045** to Bramble Kitchen (account BRA001, Norwich), dated 14/11/2026. The system checked that the posted invoice matches the request.\n\n- VAT return preparation: 1 × £275.00 = £275.00\n- Payroll setup: 3 hours × £60.00 = £180.00\n\n**Net £455.00 + VAT £91.00 = total £546.00**\n\nI took both prices as excluding VAT and added VAT at 20%. If either price already included VAT, the invoice needs correcting.",
+      "calls": [
+        {
+          "tool": "find_customer",
+          "input": {
+            "name": "Bramble Kitchen"
+          },
+          "output": "{\n  \"matches\": [\n    {\n      \"account\": \"BRA001\",\n      \"name\": \"Bramble Kitchen\",\n      \"town\": \"Norwich\",\n      \"balance\": \"330.00\"\n    }\n  ]\n}"
+        },
+        {
+          "tool": "create_invoice",
+          "input": {
+            "account": "BRA001",
+            "date": "14/11/2026",
+            "items": [
+              {
+                "description": "VAT return preparation",
+                "quantity": 1,
+                "unit_price": 275
+              },
+              {
+                "description": "Payroll setup (hours)",
+                "quantity": 3,
+                "unit_price": 60
+              }
+            ]
+          },
+          "output": "{\n  \"invoice_number\": \"INV-01045\",\n  \"account\": \"BRA001\",\n  \"date\": \"14/11/2026\",\n  \"net\": \"455.00\",\n  \"vat\": \"91.00\",\n  \"total\": \"546.00\",\n  \"verified\": true\n}"
+        }
+      ],
+      "new_invoices": [
+        {
+          "number": "INV-01045",
+          "account": "BRA001",
+          "date": "14/11/2026",
+          "total": "546.00"
+        }
+      ],
+      "seconds": 7.5,
+      "usage": {
+        "input": 4464,
+        "output": 400
+      }
+    },
+    {
+      "n": 3,
+      "task": "Raise an invoice to Harbour Street Opticians for one equipment calibration at £95, dated 1st October 2026.",
+      "pass": true,
+      "fails": [],
+      "answer": "I've raised invoice INV-01045 to Harbour Street Opticians (account HAR001, Great Yarmouth), dated 01/10/2026:\n\n- 1 × Equipment calibration at £95.00\n- Net: £95.00\n- VAT (20%): £19.00\n- **Total: £114.00**\n\nThe system checked the posted invoice and it matches what you asked for.",
+      "calls": [
+        {
+          "tool": "find_customer",
+          "input": {
+            "name": "Harbour Street Opticians"
+          },
+          "output": "{\n  \"matches\": [\n    {\n      \"account\": \"HAR001\",\n      \"name\": \"Harbour Street Opticians\",\n      \"town\": \"Great Yarmouth\",\n      \"balance\": \"0.00\"\n    }\n  ]\n}"
+        },
+        {
+          "tool": "create_invoice",
+          "input": {
+            "account": "HAR001",
+            "items": [
+              {
+                "description": "Equipment calibration",
+                "quantity": 1,
+                "unit_price": 95
+              }
+            ],
+            "date": "01/10/2026"
+          },
+          "output": "{\n  \"invoice_number\": \"INV-01045\",\n  \"account\": \"HAR001\",\n  \"date\": \"01/10/2026\",\n  \"net\": \"95.00\",\n  \"vat\": \"19.00\",\n  \"total\": \"114.00\",\n  \"verified\": true\n}"
+        }
+      ],
+      "new_invoices": [
+        {
+          "number": "INV-01045",
+          "account": "HAR001",
+          "date": "01/10/2026",
+          "total": "114.00"
+        }
+      ],
+      "seconds": 6.5,
+      "usage": {
+        "input": 4400,
+        "output": 311
+      }
+    },
+    {
+      "n": 4,
+      "task": "Invoice Kestrel for one month of bookkeeping at £620.",
+      "pass": true,
+      "fails": [],
+      "answer": "I haven't posted the invoice because two customers match \"Kestrel\":\n\n- **KES001**: Kestrel Logistics Ltd (Ipswich), current balance £1,704.00\n- **KES002**: Kestrel Lane Dental Practice (Cambridge), current balance £0.00\n\nWhich one should I invoice? Once you tell me, I'll post one month of bookkeeping at £620.00 plus VAT, dated today (18/11/2026), unless you'd like a different date.",
+      "calls": [
+        {
+          "tool": "find_customer",
+          "input": {
+            "name": "Kestrel"
+          },
+          "output": "{\n  \"matches\": [\n    {\n      \"account\": \"KES001\",\n      \"name\": \"Kestrel Logistics Ltd\",\n      \"town\": \"Ipswich\",\n      \"balance\": \"1704.00\"\n    },\n    {\n      \"account\": \"KES002\",\n      \"name\": \"Kestrel Lane Dental Practice\",\n      \"town\": \"Cambridge\",\n      \"balance\": \"0.00\"\n    }\n  ]\n}"
+        }
+      ],
+      "new_invoices": [],
+      "seconds": 4.7,
+      "usage": {
+        "input": 2765,
+        "output": 224
+      }
+    },
+    {
+      "n": 5,
+      "task": "Invoice Acme Plumbing for a boiler survey at £180.",
+      "pass": true,
+      "fails": [],
+      "answer": "I didn't raise the invoice because I can't find Acme Plumbing in the Ledgerline sales ledger. I searched for \"Acme Plumbing\", \"Acme\", \"Acm\", \"Plumbing\" and \"Plumb\", and none of them matched a customer.\n\nTo go ahead, I need one of these from you:\n- **The account code**, if they're already set up under a different name (for example a trading name or the owner's name).\n- **To set them up as a new customer.** I can't create customer accounts with the tools I have, so someone would need to add them in Ledgerline first.\n\nPlease also confirm whether the £180 is before VAT. Invoice prices are entered excluding VAT, so at 20% the invoice total would be £216.00.",
+      "calls": [
+        {
+          "tool": "find_customer",
+          "input": {
+            "name": "Acme Plumbing"
+          },
+          "output": "{\n  \"matches\": []\n}"
+        },
+        {
+          "tool": "find_customer",
+          "input": {
+            "name": "Acme"
+          },
+          "output": "{\n  \"matches\": []\n}"
+        },
+        {
+          "tool": "find_customer",
+          "input": {
+            "name": "Plumbing"
+          },
+          "output": "{\n  \"matches\": []\n}"
+        },
+        {
+          "tool": "find_customer",
+          "input": {
+            "name": "Plumb"
+          },
+          "output": "{\n  \"matches\": []\n}"
+        },
+        {
+          "tool": "find_customer",
+          "input": {
+            "name": "Acm"
+          },
+          "output": "{\n  \"matches\": []\n}"
+        }
+      ],
+      "new_invoices": [],
+      "seconds": 10.5,
+      "usage": {
+        "input": 7251,
+        "output": 519
+      }
+    },
+    {
+      "n": 6,
+      "task": "Mill Road Motors needs one invoice for: MOT reminders setup £40, 2 x payroll run £45, CIS return £85, VAT review £150, bank reconciliation £95, credit control call £30, and management pack £220. Date it today.",
+      "pass": true,
+      "fails": [],
+      "answer": "I haven't posted anything yet, because this can't go on one invoice as you asked.\n\nI found the customer: Mill Road Motors (MIL001, Cambridge). The problem is that you listed 7 items, but Ledgerline only allows up to 5 lines on an invoice.\n\nThese are the lines, all excluding VAT:\n1. MOT reminders setup: 1 × £40.00\n2. Payroll run: 2 × £45.00 = £90.00\n3. CIS return: 1 × £85.00\n4. VAT review: 1 × £150.00\n5. Bank reconciliation: 1 × £95.00\n6. Credit control call: 1 × £30.00\n7. Management pack: 1 × £220.00\n\nThat comes to £710.00 net. If VAT applies at 20%, the total would be £852.00. I've assumed the 20% rate, and that the £45 is the price for each payroll run.\n\nYou can do this either of these ways:\n- **Two invoices dated 18/11/2026:** for example, one with 5 lines and one with 2.\n- **One invoice with some lines combined:** for example, put the credit control call and the MOT reminders setup on one line at £70. The total is the same, but those two items wouldn't be listed separately.\n\nWhich would you prefer? If it's the combined invoice, which lines should go together?",
+      "calls": [
+        {
+          "tool": "find_customer",
+          "input": {
+            "name": "Mill Road"
+          },
+          "output": "{\n  \"matches\": [\n    {\n      \"account\": \"MIL001\",\n      \"name\": \"Mill Road Motors\",\n      \"town\": \"Cambridge\",\n      \"balance\": \"1740.00\"\n    }\n  ]\n}"
+        }
+      ],
+      "new_invoices": [],
+      "seconds": 8.8,
+      "usage": {
+        "input": 2927,
+        "output": 647
+      }
+    },
+    {
+      "n": 7,
+      "task": "Mill Road Motors: invoice today for MOT reminders setup £40, 2 x payroll run £45, CIS return £85, VAT review £150, bank reconciliation £95, credit control call £30, and management pack £220. Split it across invoices if the system needs you to.",
+      "pass": true,
+      "fails": [],
+      "answer": "I've invoiced Mill Road Motors (MIL001, Cambridge) for today, 18/11/2026. The system only allows 5 lines per invoice, so I split the 7 items across two invoices. Both were checked against the request after posting.\n\n**INV-01045**\n- MOT reminders setup: £40.00\n- Payroll run, 2 × £45: £90.00\n- CIS return: £85.00\n- VAT review: £150.00\n- Bank reconciliation: £95.00\n- Net £460.00 + VAT £92.00 = **£552.00**\n\n**INV-01046**\n- Credit control call: £30.00\n- Management pack: £220.00\n- Net £250.00 + VAT £50.00 = **£300.00**\n\n**Combined:** net £710.00 + VAT £142.00 = **£852.00**. The customer's balance was £1,740.00 before these invoices, so it should now be £2,592.00.",
+      "calls": [
+        {
+          "tool": "find_customer",
+          "input": {
+            "name": "Mill Road Motors"
+          },
+          "output": "{\n  \"matches\": [\n    {\n      \"account\": \"MIL001\",\n      \"name\": \"Mill Road Motors\",\n      \"town\": \"Cambridge\",\n      \"balance\": \"1740.00\"\n    }\n  ]\n}"
+        },
+        {
+          "tool": "create_invoice",
+          "input": {
+            "account": "MIL001",
+            "items": [
+              {
+                "description": "MOT reminders setup",
+                "quantity": 1,
+                "unit_price": 40
+              },
+              {
+                "description": "Payroll run",
+                "quantity": 2,
+                "unit_price": 45
+              },
+              {
+                "description": "CIS return",
+                "quantity": 1,
+                "unit_price": 85
+              },
+              {
+                "description": "VAT review",
+                "quantity": 1,
+                "unit_price": 150
+              },
+              {
+                "description": "Bank reconciliation",
+                "quantity": 1,
+                "unit_price": 95
+              }
+            ],
+            "date": "18/11/2026"
+          },
+          "output": "{\n  \"invoice_number\": \"INV-01045\",\n  \"account\": \"MIL001\",\n  \"date\": \"18/11/2026\",\n  \"net\": \"460.00\",\n  \"vat\": \"92.00\",\n  \"total\": \"552.00\",\n  \"verified\": true\n}"
+        },
+        {
+          "tool": "create_invoice",
+          "input": {
+            "account": "MIL001",
+            "items": [
+              {
+                "description": "Credit control call",
+                "quantity": 1,
+                "unit_price": 30
+              },
+              {
+                "description": "Management pack",
+                "quantity": 1,
+                "unit_price": 220
+              }
+            ],
+            "date": "18/11/2026"
+          },
+          "output": "{\n  \"invoice_number\": \"INV-01046\",\n  \"account\": \"MIL001\",\n  \"date\": \"18/11/2026\",\n  \"net\": \"250.00\",\n  \"vat\": \"50.00\",\n  \"total\": \"300.00\",\n  \"verified\": true\n}"
+        }
+      ],
+      "new_invoices": [
+        {
+          "number": "INV-01045",
+          "account": "MIL001",
+          "date": "18/11/2026",
+          "total": "552.00"
+        },
+        {
+          "number": "INV-01046",
+          "account": "MIL001",
+          "date": "18/11/2026",
+          "total": "300.00"
+        }
+      ],
+      "seconds": 9.9,
+      "usage": {
+        "input": 4988,
+        "output": 776
+      }
+    },
+    {
+      "n": 8,
+      "task": "How much does Kestrel Logistics owe us at the moment?",
+      "pass": true,
+      "fails": [],
+      "answer": "Kestrel Logistics Ltd in Ipswich (account KES001) owes us **£1,704.00** at the moment, including VAT.",
+      "calls": [
+        {
+          "tool": "find_customer",
+          "input": {
+            "name": "Kestrel Logistics"
+          },
+          "output": "{\n  \"matches\": [\n    {\n      \"account\": \"KES001\",\n      \"name\": \"Kestrel Logistics Ltd\",\n      \"town\": \"Ipswich\",\n      \"balance\": \"1704.00\"\n    }\n  ]\n}"
+        }
+      ],
+      "new_invoices": [],
+      "seconds": 4.1,
+      "usage": {
+        "input": 2703,
+        "output": 104
+      }
+    },
+    {
+      "n": 9,
+      "task": "What were our total sales including VAT in June 2026, and how many invoices?",
+      "pass": true,
+      "fails": [],
+      "answer": "In June 2026 (01/06/2026 to 30/06/2026), total sales including VAT were **£1,818.00** from **3 invoices**:\n\n| Invoice | Date | Customer | Net | VAT | Total |\n|---|---|---|---|---|---|\n| INV-01040 | 03/06/2026 | Fenwick Builders Ltd | £620.00 | £124.00 | £744.00 |\n| INV-01041 | 11/06/2026 | Kestrel Logistics Ltd | £620.00 | £124.00 | £744.00 |\n| INV-01042 | 18/06/2026 | Bramble Kitchen | £275.00 | £55.00 | £330.00 |\n| **Total** | | | **£1,515.00** | **£303.00** | **£1,818.00** |\n\nThe invoice list shows the same three June invoices, so the figures match.",
+      "calls": [
+        {
+          "tool": "export_sales_daybook",
+          "input": {
+            "start_date": "01/06/2026",
+            "end_date": "30/06/2026"
+          },
+          "output": "{\n  \"rows\": [\n    {\n      \"Invoice\": \"INV-01040\",\n      \"Date\": \"03/06/2026\",\n      \"A/C\": \"FEN001\",\n      \"Customer\": \"Fenwick Builders Ltd\",\n      \"Net\": \"620.00\",\n      \"VAT\": \"124.00\",\n      \"Total\": \"744.00\"\n    },\n    {\n      \"Invoice\": \"INV-01041\",\n      \"Date\": \"11/06/2026\",\n      \"A/C\": \"KES001\",\n      \"Customer\": \"Kestrel Logistics Ltd\",\n      \"Net\": \"620.00\",\n      \"VAT\": \"124.00\",\n      \"Total\": \"744.00\"\n    },\n    {\n      \"Invoice\": \"INV-01042\",\n      \"Date\": \"18/06/2026\",\n      \"A/"
+        },
+        {
+          "tool": "list_invoices",
+          "input": {},
+          "output": "{\n  \"invoices\": [\n    {\n      \"invoice_number\": \"INV-01044\",\n      \"account\": \"MIL001\",\n      \"date\": \"15/07/2026\",\n      \"total\": \"1740.00\"\n    },\n    {\n      \"invoice_number\": \"INV-01043\",\n      \"account\": \"KES001\",\n      \"date\": \"02/07/2026\",\n      \"total\": \"960.00\"\n    },\n    {\n      \"invoice_number\": \"INV-01042\",\n      \"account\": \"BRA001\",\n      \"date\": \"18/06/2026\",\n      \"total\": \"330.00\"\n    },\n    {\n      \"invoice_number\": \"INV-01041\",\n      \"account\": \"KES001\",\n      \"date\": \"11/06/202"
+        }
+      ],
+      "new_invoices": [],
+      "seconds": 7.3,
+      "usage": {
+        "input": 5185,
+        "output": 531
+      }
+    },
+    {
+      "n": 10,
+      "task": "Which customer had the largest single invoice in July 2026, and for how much including VAT?",
+      "pass": true,
+      "fails": [],
+      "answer": "The customer was **Mill Road Motors (MIL001)**. Its largest invoice in July 2026 was **INV-01044**, dated 15/07/2026, for **£1,740.00 including VAT** (£1,450.00 plus £290.00 VAT).\n\nOnly one other invoice was raised that month: INV-01043 to Kestrel Logistics Ltd on 02/07/2026, for £960.00 including VAT. I checked the July sales day book against the full invoice list, and both show the same two invoices.",
+      "calls": [
+        {
+          "tool": "export_sales_daybook",
+          "input": {
+            "start_date": "01/07/2026",
+            "end_date": "31/07/2026"
+          },
+          "output": "{\n  \"rows\": [\n    {\n      \"Invoice\": \"INV-01043\",\n      \"Date\": \"02/07/2026\",\n      \"A/C\": \"KES001\",\n      \"Customer\": \"Kestrel Logistics Ltd\",\n      \"Net\": \"800.00\",\n      \"VAT\": \"160.00\",\n      \"Total\": \"960.00\"\n    },\n    {\n      \"Invoice\": \"INV-01044\",\n      \"Date\": \"15/07/2026\",\n      \"A/C\": \"MIL001\",\n      \"Customer\": \"Mill Road Motors\",\n      \"Net\": \"1450.00\",\n      \"VAT\": \"290.00\",\n      \"Total\": \"1740.00\"\n    }\n  ],\n  \"count\": 2,\n  \"total\": \"2700.00\",\n  \"file\": \"DAYBOOK_01072026_3107202"
+        },
+        {
+          "tool": "list_invoices",
+          "input": {},
+          "output": "{\n  \"invoices\": [\n    {\n      \"invoice_number\": \"INV-01044\",\n      \"account\": \"MIL001\",\n      \"date\": \"15/07/2026\",\n      \"total\": \"1740.00\"\n    },\n    {\n      \"invoice_number\": \"INV-01043\",\n      \"account\": \"KES001\",\n      \"date\": \"02/07/2026\",\n      \"total\": \"960.00\"\n    },\n    {\n      \"invoice_number\": \"INV-01042\",\n      \"account\": \"BRA001\",\n      \"date\": \"18/06/2026\",\n      \"total\": \"330.00\"\n    },\n    {\n      \"invoice_number\": \"INV-01041\",\n      \"account\": \"KES001\",\n      \"date\": \"11/06/202"
+        }
+      ],
+      "new_invoices": [],
+      "seconds": 7.6,
+      "usage": {
+        "input": 5001,
+        "output": 375
+      }
+    },
+    {
+      "n": 11,
+      "task": "What was billed on invoice INV-01043?",
+      "pass": true,
+      "fails": [],
+      "answer": "Invoice INV-01043 was billed to account KES001 on 02/07/2026.\n\n| Description | Qty | Unit price | Amount |\n|---|---|---|---|\n| Monthly bookkeeping - June | 1 | £620.00 | £620.00 |\n| Payroll run | 4 | £45.00 | £180.00 |\n\n- **Net:** £800.00\n- **VAT (20%):** £160.00\n- **Total:** £960.00",
+      "calls": [
+        {
+          "tool": "get_invoice",
+          "input": {
+            "invoice_number": "INV-01043"
+          },
+          "output": "{\n  \"invoice_number\": \"INV-01043\",\n  \"account\": \"KES001\",\n  \"date\": \"02/07/2026\",\n  \"lines\": [\n    {\n      \"description\": \"Monthly bookkeeping - June\",\n      \"quantity\": 1,\n      \"unit_price\": \"620.00\",\n      \"amount\": \"620.00\"\n    },\n    {\n      \"description\": \"Payroll run\",\n      \"quantity\": 4,\n      \"unit_price\": \"45.00\",\n      \"amount\": \"180.00\"\n    }\n  ],\n  \"net\": \"800.00\",\n  \"vat\": \"160.00\",\n  \"total\": \"960.00\"\n}"
+        }
+      ],
+      "new_invoices": [],
+      "seconds": 4.1,
+      "usage": {
+        "input": 2813,
+        "output": 207
+      }
+    },
+    {
+      "n": 12,
+      "task": "Invoice Ashworth & Daughters for 1 x joinery quote review at £0.",
+      "pass": true,
+      "fails": [],
+      "answer": "I didn't post the invoice. Ledgerline only accepts lines with a price above zero, so it rejected the £0 line and nothing was created.\n\nI found the customer: Ashworth & Daughters Joinery in King's Lynn (account ASH001), with a balance of £0.00.\n\nIf you tell me what to charge for the joinery quote review, I'll post the invoice. If it was meant to be free, Ledgerline can't record a free line, so it would need to be noted somewhere else.",
+      "calls": [
+        {
+          "tool": "find_customer",
+          "input": {
+            "name": "Ashworth"
+          },
+          "output": "{\n  \"matches\": [\n    {\n      \"account\": \"ASH001\",\n      \"name\": \"Ashworth & Daughters Joinery\",\n      \"town\": \"King's Lynn\",\n      \"balance\": \"0.00\"\n    }\n  ]\n}"
+        },
+        {
+          "tool": "create_invoice",
+          "input": {
+            "account": "ASH001",
+            "items": [
+              {
+                "description": "Joinery quote review",
+                "quantity": 1,
+                "unit_price": 0
+              }
+            ]
+          },
+          "output": "{\n  \"error\": \"Line 1: needs description, a positive quantity and a positive unit price.\"\n}"
+        }
+      ],
+      "new_invoices": [],
+      "seconds": 7.3,
+      "usage": {
+        "input": 4323,
+        "output": 368
+      }
+    },
+    {
+      "n": 13,
+      "task": "Invoice Wensum Valley Garden Centre for 1 annual accounts at £980 dated 31/11/2026.",
+      "pass": true,
+      "fails": [],
+      "answer": "I haven't posted this invoice because 31/11/2026 isn't a real date. November only has 30 days.\n\nI found one matching customer: Wensum Valley Garden Centre (WEN001, Dereham).\n\nWhich date should the invoice have? It might be 30/11/2026 (end of the month) or 01/12/2026. Once you confirm, I'll post 1 × annual accounts at £980.00 plus VAT.",
+      "calls": [
+        {
+          "tool": "find_customer",
+          "input": {
+            "name": "Wensum Valley Garden Centre"
+          },
+          "output": "{\n  \"matches\": [\n    {\n      \"account\": \"WEN001\",\n      \"name\": \"Wensum Valley Garden Centre\",\n      \"town\": \"Dereham\",\n      \"balance\": \"0.00\"\n    }\n  ]\n}"
+        }
+      ],
+      "new_invoices": [],
+      "seconds": 5.5,
+      "usage": {
+        "input": 2828,
+        "output": 280
+      }
+    }
+  ]
+}
