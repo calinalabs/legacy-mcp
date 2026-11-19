@@ -17,7 +17,7 @@ adapter/ledgerline.py   one method per task: navigate, fill, submit, read the re
 legacy_app/   Ledgerline Accounts 4.2 (server-rendered HTML, no API)
 ```
 
-Tools are whole tasks, not clicks. `create_invoice(account, items, date)` validates the request, fills the entry form, posts it, reads the invoice number from the confirmation page, then opens the posted invoice and checks the account, lines and total before returning. Business problems (unknown account, more than five lines, a zero price, an impossible date) come back as readable errors the AI can act on, and nothing is posted.
+Tools are whole tasks, not clicks. `create_invoice(account, items, date)` validates the request, fills the entry form, posts it, reads the invoice number from the confirmation page, then opens the posted invoice and checks the account, date, every line and the total before returning. Business problems (unknown account, more than five lines, a zero price, an impossible date) come back as readable errors the AI can act on, and nothing is posted.
 
 ## Results
 
@@ -27,10 +27,10 @@ Tools are whole tasks, not clicks. `create_invoice(account, items, date)` valida
 |---|---|
 | Tasks passed | 13 / 13 |
 | Includes | ambiguous customer names, unknown customers, a 7-line invoice in a 5-line system, invalid dates and prices, reports, balances |
-| Tool calls | 25 in total (about 2 per task) |
-| Average time per task | about 7 s |
+| Tool calls | 22 in total (under 2 per task) |
+| Average time per task | about 6 s |
 
-Two notes on honesty: one task's expected total was wrong in our first draft (£882, the right figure is £852) and its wording asked for "one invoice" the system cannot hold; the agent refused to post and explained, which is the right behaviour, so the task was changed to check for that and a second task was added that allows splitting. One check missed the phrase "can't find" and was extended after the run; the saved answers were re-scored, not re-run. Details in `results/eval.json`.
+Two notes on honesty: one task's expected total was wrong in our first draft (£882, the right figure is £852) and its wording asked for "one invoice" the system cannot hold; the agent refused to post and explained, which is the right behaviour, so the task was changed to check for that and a second task was added that allows splitting. One check missed the phrase "can't find" and was extended. The published results are a fresh run of all 13 tasks with the final checks, in `results/eval.json`.
 
 ## Run it
 

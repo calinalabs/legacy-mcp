@@ -139,12 +139,15 @@ class Ledgerline:
             raise LedgerlineError("Could not confirm the invoice was posted. Check the invoice list before retrying.")
         number = m.group(1)
 
-        # Verify: open the posted invoice and check account, lines and total match what we sent.
+        # Verify: open the posted invoice and check account, date, every line and the total match what we sent.
         inv = self.get_invoice(number)
         net = sum((q * u for _, q, u in clean), Decimal("0"))
         expected = net + (net * Decimal("0.20")).quantize(Decimal("0.01"))
-        if inv["account"] != account or Decimal(inv["total"]) != expected or len(inv["lines"]) != len(clean):
-            raise LedgerlineError(f"Invoice {number} was posted but does not match the request; check it by hand.")
+        saved = [(l["description"], l["quantity"], Decimal(l["unit_price"])) for l in inv["lines"]]
+        if (inv["account"] != account or inv["date"] != date or saved != clean
+                or Decimal(inv["total"] or "0") != expected):
+            raise LedgerlineError(f"Invoice {number} was posted but does not match the request; "
+                                  "check it in Ledgerline before posting it again.")
         self.log.append(f"create_invoice {account}: {number} total {expected}")
         return {"invoice_number": number, "account": account, "date": date,
                 "net": str(net), "vat": inv["vat"], "total": inv["total"], "verified": True}
